@@ -53,10 +53,11 @@ foreach(glob(Application::getInstance()->getContext()->getServer()->getDocumentR
 if ($request->getRequestMethod()==='POST' && AccessController::isEditSettings() && $request->get('Update'))
 {
     $LOCKED_str = $request->get('LOCKED');
-    $LOCKED_str = preg_replace('/(\t|\n|,)/is', '', $LOCKED_str);
+    $LOCKED_str = preg_replace('/(\t|\n|,)/is', ' ', $LOCKED_str);
     $LOCKED_modules = [];
     foreach(explode(" ", $LOCKED_str) as $moduleVariant){
-        if(trim($moduleVariant) && strpos($moduleVariant, '.')!==false){
+        $moduleVariant = trim($moduleVariant);
+        if($moduleVariant && strpos($moduleVariant, '.')!==false){
             if(!in_array($moduleVariant, $LOCKED_modules))
                 $LOCKED_modules[] = $moduleVariant;
         }
