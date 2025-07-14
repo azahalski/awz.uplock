@@ -4,17 +4,17 @@ return [
         'value' => [
             'entities' => [
                 [
-                    'entityId' => 'awzacl-user',
+                    'entityId' => 'awzuplock-user',
                     'provider' => [
-                        'moduleId' => 'awz.acl',
-                        'className' => '\\Awz\\Acl\\Access\\EntitySelectors\\User'
+                        'moduleId' => 'awz.uplock',
+                        'className' => '\\Awz\\Uplock\\Access\\EntitySelectors\\User'
                     ],
                 ],
                 [
-                    'entityId' => 'awzacl-group',
+                    'entityId' => 'awzuplock-group',
                     'provider' => [
-                        'moduleId' => 'awz.acl',
-                        'className' => '\\Awz\\Acl\\Access\\EntitySelectors\\Group'
+                        'moduleId' => 'awz.uplock',
+                        'className' => '\\Awz\\Uplock\\Access\\EntitySelectors\\Group'
                     ],
                 ],
             ]
