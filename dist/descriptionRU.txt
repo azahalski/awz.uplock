@@ -1,16 +1,32 @@
 [center]Модуль для CMS Bitrix, который запрещает обновление и установку выбранных модулей через штатный механизм обновлений: защищает пропатченные и кастомизированные модули от случайного обновления и позволяет выводить причину блокировки прямо в сообщении об ошибке.[/center]
 
-[center][size=18pt][b]Подробное описание[/b][/size][/center]
+[center][size=18pt][b]Подробное описание[/b][/size]
+[IMG WIDTH=225 HEIGHT=9]https://zahalski.dev/upload/awz.load.ai/lv1iyow5dj.png[/IMG][/center]
 [center]Модуль [b]AWZ: Блокировка обновлений[/b] предназначен для разработчиков и администраторов. Он позволяет заблокировать обновление отдельных модулей в системе и сохранить причину блокировки: при попытке обновления админ видит понятное сообщение с вашим текстом ошибки, а не системную ошибку.[/center]
 
-[center][size=18pt][b]Как работает[/b][/size][/center]
+[center][IMG WIDTH=800 HEIGHT=447]https://zahalski.dev/upload/awz.load.ai/wd7ksv9x1o.png[/IMG][/center]
+
+[center][size=18pt][b]Как работает[/b][/size]
+[IMG WIDTH=225 HEIGHT=9]https://zahalski.dev/upload/awz.load.ai/lv1iyow5dj.png[/IMG][/center]
 [center]Модуль регистрирует обработчик события [b]OnPageStart[/b] и перехватывает запросы к сценарию обновлений [b]/bitrix/admin/update_system_partner_call.php[/b]:[/center]
 
 [center]• если администратор пытается обновить заблокированный модуль, запрос прерывается с сообщением «Обновление <код модуля> заблокировано модулем awz.uplock (настройки блокировки обновлений).» и собственным текстом ошибки, заданным в настройках, в красной рамке;[/center]
 [center]• если есть хоть один заблокированный модуль, а запрос на обновление выполнен без указания конкретных модулей (обновление «всего сразу»), запрос прерывается с сообщением «Отметьте модули на вкладке список обновлений и нажмите кнопку загрузить.» - нельзя одним нажатием протащить обновление заблокированного модуля;[/center]
 [center]• модули из списка «Запретить установку модулей» блокируются при установке с сообщением «Установка данного модуля запрещена администратором.»[/center]
 
-[center][size=18pt][b]Настройки[/b][/size][/center]
+[center][IMG WIDTH=800 HEIGHT=447]https://zahalski.dev/upload/awz.load.ai/4qqg6w9af5.png[/IMG][/center]
+
+[center][size=18pt][b]Сильные стороны[/b][/size]
+[IMG WIDTH=225 HEIGHT=9]https://zahalski.dev/upload/awz.load.ai/lv1iyow5dj.png[/IMG][/center]
+[center]
+[TABLE]
+[TR][TD][center][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/6nnci063dt.png[/IMG][/center][/TD][TD][center][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/chwspvda72.png[/IMG][/center][/TD][TD][center][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/i6vm5av05l.png[/IMG][/center][/TD][/TR]
+[TR][TD][center][b]Защита от случайных обновлений[/b][/center][/TD][TD][center][b]Понятный текст ошибки[/b][/center][/TD][TD][center][b]Запрет установки модулей[/b][/center][/TD][/TR]
+[/TABLE]
+[/center]
+
+[center][size=18pt][b]Настройки[/b][/size]
+[IMG WIDTH=225 HEIGHT=9]https://zahalski.dev/upload/awz.load.ai/lv1iyow5dj.png[/IMG][/center]
 [center]Страница настроек: [b]/bitrix/admin/settings.php?mid=awz.uplock[/b].[/center]
 
 [center]• [b]Отключить модуль[/b] - полностью выключает перехват обновлений, не удаляя настройки.[/center]
