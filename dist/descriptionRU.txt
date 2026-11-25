@@ -5,11 +5,14 @@
 [center]
 [TABLE][TR][TH][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/6nnci063dt.png[/IMG]
 
-[b]Защита от случайных обновлений[/b][color=#8b93b3]заблокированный модуль не обновится ни по отдельности, ни при обновлении всего списка сразу.[/color][/TH][TH][IMG WIDTH=10 HEIGHT=20]https://zahalski.dev/upload/awz.load.ai/4zhdkguvu3.png[/IMG][/TH][TH][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/chwspvda72.png[/IMG]
+[b]Защита от случайных обновлений[/b]
+[color=#8b93b3]заблокированный модуль не обновится ни по отдельности, ни при обновлении всего списка сразу.[/color][/TH][TH][IMG WIDTH=10 HEIGHT=20]https://zahalski.dev/upload/awz.load.ai/4zhdkguvu3.png[/IMG][/TH][TH][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/chwspvda72.png[/IMG]
 
-[b]Понятный текст ошибки[/b][color=#8b93b3]свой текст причины блокировки задаётся в настройках для каждого модуля отдельно.[/color][/TH][TH][IMG WIDTH=10 HEIGHT=20]https://zahalski.dev/upload/awz.load.ai/4zhdkguvu3.png[/IMG][/TH][TH][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/i6vm5av05l.png[/IMG]
+[b]Понятный текст ошибки[/b]
+[color=#8b93b3]свой текст причины блокировки задаётся в настройках для каждого модуля отдельно.[/color][/TH][TH][IMG WIDTH=10 HEIGHT=20]https://zahalski.dev/upload/awz.load.ai/4zhdkguvu3.png[/IMG][/TH][TH][IMG WIDTH=72 HEIGHT=72]https://zahalski.dev/upload/awz.load.ai/i6vm5av05l.png[/IMG]
 
-[b]Запрет установки модулей[/b][color=#8b93b3]установка запрещённых модулей блокируется, даже если они ещё не установлены в системе.[/color][/TH][/TR][/TABLE]
+[b]Запрет установки модулей[/b]
+[color=#8b93b3]установка запрещённых модулей блокируется, даже если они ещё не установлены в системе.[/color][/TH][/TR][/TABLE]
 [/center]
 
 [center][IMG WIDTH=800 HEIGHT=447]https://zahalski.dev/upload/awz.load.ai/wd7ksv9x1o.png[/IMG][/center]
