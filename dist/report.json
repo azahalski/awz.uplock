@@ -1,0 +1,58 @@
+{
+  "success": true,
+  "requestId": "awz.uplock-1795879260",
+  "data": {
+    "vulnerabilities": [
+      {
+        "file": "options.php",
+        "line": "115-118",
+        "type": "Insecure Deserialization",
+        "severity": "low",
+        "description": "Подозрение (defense-in-depth): unserialize(Option::get($module_id, \"MODULES\", \"\",\"\")) — десериализация значения из хранилища опций модуля (таблица b_option). Источник — настройки модуля, а не прямой запрос пользователя: значение записывается только через options.php, защищённый check_bitrix_sessid() и AccessController::isEditSettings() (options.php:53-54). Прямого вектора записи произвольного сериализованного значения пользователем не обнаружено, поэтому PHP Object Injection не подтверждён. Аналогичный unserialize присутствует в lib/handlers.php:32-35. Митигация уже частично применена — ['allowed_classes' => false] (options.php:117, lib/handlers.php:34), что блокирует инстанцирование классов-гаджетов и сводит остаточный риск к минимуму. Станет эксплуатируемым, только если появится вектор записи произвольной опции (например, SQL-инъекция в стороннем модуле с доступом к b_option).",
+        "recommendation": "Сохранять настройки в JSON (json_encode/json_decode) вместо serialize/unserialize; оставить ['allowed_classes' => false] как обязательную защиту при любых будущих правках; не добавлять путей записи в опцию MINUS проверки sessid/прав.",
+        "fix": "Before:\n$opts = unserialize(Option::get($module_id, \"MODULES\", \"\",\"\"), ['allowed_classes' => false]);\n\nAfter:\n$raw = Option::get($module_id, \"MODULES\", \"\", \"\");\n$opts = json_decode($raw, true);\nif (!is_array($opts)) $opts = [];\n// и при сохранении: Option::set($module_id, \"MODULES\", json_encode($opts), \"\");"
+      }
+    ],
+    "summary": "Обнаружено 1 уязвимость в 1 файле при анализе 27 PHP-файлов кода модуля (49 целевых файлов по recon, включая lang-файлы). Максимальная severity: low. Все recon-сигналы проверены и отклонены как false positives: ->exec() в lib/access/model/usermodel.php — это запрос-объект ORM, не OS-команда; require по фиксированным DOCUMENT_ROOT-путям в options.php — не управляемый include; preg_match в options.php:74,81 — литеральные паттерны, не пользовательские; SQL в lib/access/handlers.php:21-31 собирается из значений, приведённых к (int); unserialize использует allowed_classes=false; AJAX-контроллер install/components/uplock.config.permissions/ajax.php имеет Authentication+HttpMethod(POST)+Csrf и дополнительную проверку AccessController::can в processBeforeAction; вывод модулей в options.php (строки 167-173) — данные листинга файловой системы, msg экранируется htmlspecialcharsEx; в lib/handlers.php:78-80 пользовательские сообщения экранируются htmlspecialcharsbx. Модуль ставит обработчик OnPageStart (lib/handlers.php), блокирующий обновление залоченных модулей — входные данные ($request->get('reqm')) используются только в in_array-сравнениях.",
+    "scannedFiles": 49,
+    "riskLevel": "low",
+    "auditedFiles": [
+      ".settings.php",
+      "include.php",
+      "options.php",
+      "install\\index.php",
+      "install\\solution.php",
+      "install\\unstep.php",
+      "install\\version.php",
+      "install\\components\\uplock.config.permissions\\ajax.php",
+      "lib\\handlers.php",
+      "lib\\access\\accesscontroller.php",
+      "lib\\access\\handlers.php",
+      "lib\\access\\component\\configpermissions.php",
+      "lib\\access\\custom\\actiondictionary.php",
+      "lib\\access\\custom\\componentconfig.php",
+      "lib\\access\\custom\\helper.php",
+      "lib\\access\\custom\\permissiondictionary.php",
+      "lib\\access\\custom\\roledictionary.php",
+      "lib\\access\\custom\\rules\\example.php",
+      "lib\\access\\entity\\user.php",
+      "lib\\access\\entityselectors\\group.php",
+      "lib\\access\\entityselectors\\user.php",
+      "lib\\access\\include\\moduleright.php",
+      "lib\\access\\model\\basemodel.php",
+      "lib\\access\\model\\usermodel.php",
+      "lib\\access\\permission\\actiondictionary.php",
+      "lib\\access\\permission\\permissiondictionary.php",
+      "lib\\access\\permission\\roledictionary.php",
+      "lib\\access\\permission\\roleutil.php",
+      "lib\\access\\permission\\rulefactory.php",
+      "lib\\access\\permission\\rules\\rightedit.php",
+      "lib\\access\\permission\\rules\\rightview.php",
+      "lib\\access\\permission\\rules\\settedit.php",
+      "lib\\access\\permission\\rules\\settview.php",
+      "lib\\access\\tables\\permission.php",
+      "lib\\access\\tables\\role.php",
+      "lib\\access\\tables\\rolerelation.php"
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "module": {
+    "code": "awz.uplock"
+  },
+  "current_state": {
+    "status": "needs_review",
+    "last_run_id": "awz.uplock-1795879260",
+    "archive_sha256": null,
+    "open_findings": 1,
+    "blocking_findings_open": 0,
+    "false_positive_findings": 0,
+    "accepted_risk_findings": 0,
+    "fixed_findings": 0,
+    "removed_findings": 0,
+    "total_findings": 1
+  },
+  "runs": [
+    {
+      "run_id": "awz.uplock-1795879260",
+      "created_at": "2026-11-28T15:21:56+00:00",
+      "archive_sha256": null,
+      "scanner_request_id": "awz.uplock-1795879260",
+      "input_summary": "Обнаружено 1 уязвимость в 1 файле при анализе 27 PHP-файлов кода модуля (49 целевых файлов по recon, включая lang-файлы). Максимальная severity: low. Все recon-сигналы проверены и отклонены как false positives: ->exec() в lib/access/model/usermodel.php — это запрос-объект ORM, не OS-команда; require по фиксированным DOCUMENT_ROOT-путям в options.php — не управляемый include; preg_match в options.php:74,81 — литеральные паттерны, не пользовательские; SQL в lib/access/handlers.php:21-31 собирается из значений, приведённых к (int); unserialize использует allowed_classes=false; AJAX-контроллер install/components/uplock.config.permissions/ajax.php имеет Authentication+HttpMethod(POST)+Csrf и дополнительную проверку AccessController::can в processBeforeAction; вывод модулей в options.php (строки 167-173) — данные листинга файловой системы, msg экранируется htmlspecialcharsEx; в lib/handlers.php:78-80 пользовательские сообщения экранируются htmlspecialcharsbx. Модуль ставит обработчик OnPageStart (lib/handlers.php), блокирующий обновление залоченных модулей — входные данные ($request->get('reqm')) используются только в in_array-сравнениях.",
+      "summary": {
+        "current_scan_findings": 1,
+        "severity_counts": {
+          "medium": 1
+        },
+        "new_findings": 1,
+        "still_open_findings": 0,
+        "reopened_findings": 0,
+        "resolved_since_previous_run": 0
+      }
+    }
+  ],
+  "findings": [
+    {
+      "journal_finding_id": "JF-00001",
+      "fingerprint": "b2d9ce010e58ea8bbb5312fd49ec1b23",
+      "type": "Insecure Deserialization",
+      "severity": "medium",
+      "status": "open",
+      "first_seen_run_id": "awz.uplock-1795879260",
+      "last_seen_run_id": "awz.uplock-1795879260",
+      "resolved_run_id": null,
+      "original_location": {
+        "file": "options.php",
+        "line": "115-118"
+      },
+      "current_location": {
+        "file": "options.php",
+        "line": "115-118"
+      },
+      "latest_vulnerability": {
+        "file": "options.php",
+        "line": "115-118",
+        "type": "Insecure Deserialization",
+        "severity": "medium",
+        "description": "Подозрение (defense-in-depth): unserialize(Option::get($module_id, \"MODULES\", \"\",\"\")) — десериализация значения из хранилища опций модуля (таблица b_option). Источник — настройки модуля, а не прямой запрос пользователя: значение записывается только через options.php, защищённый check_bitrix_sessid() и AccessController::isEditSettings() (options.php:53-54). Прямого вектора записи произвольного сериализованного значения пользователем не обнаружено, поэтому PHP Object Injection не подтверждён. Аналогичный unserialize присутствует в lib/handlers.php:32-35. Митигация уже частично применена — ['allowed_classes' => false] (options.php:117, lib/handlers.php:34), что блокирует инстанцирование классов-гаджетов и сводит остаточный риск к минимуму. Станет эксплуатируемым, только если появится вектор записи произвольной опции (например, SQL-инъекция в стороннем модуле с доступом к b_option).",
+        "recommendation": "Сохранять настройки в JSON (json_encode/json_decode) вместо serialize/unserialize; оставить ['allowed_classes' => false] как обязательную защиту при любых будущих правках; не добавлять путей записи в опцию MINUS проверки sessid/прав.",
+        "fix": "Before:\n$opts = unserialize(Option::get($module_id, \"MODULES\", \"\",\"\"), ['allowed_classes' => false]);\n\nAfter:\n$raw = Option::get($module_id, \"MODULES\", \"\", \"\");\n$opts = json_decode($raw, true);\nif (!is_array($opts)) $opts = [];\n// и при сохранении: Option::set($module_id, \"MODULES\", json_encode($opts), \"\");",
+        "reviewed": {
+          "oldSeverity": "low",
+          "newSeverity": "medium",
+          "changed": true,
+          "category": "sql-injection",
+          "versionScope": "current",
+          "version": "current",
+          "currentVersionRelevance": "present-in-current-scan",
+          "action": "parameterize-query",
+          "confidence": "medium",
+          "rationale": "Kept as medium by default under the BUS Marketplace triage policy; raise only when exploit impact is proven beyond the journal text."
+        }
+      },
+      "events": [
+        {
+          "run_id": "awz.uplock-1795879260",
+          "event": "detected",
+          "at": "2026-11-28T15:21:56+00:00",
+          "location": {
+            "file": "options.php",
+            "line": "115-118"
+          },
+          "status": "open"
+        }
+      ]
+    }
+  ]
+}
