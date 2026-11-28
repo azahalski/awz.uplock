@@ -50,7 +50,8 @@ foreach(glob(Application::getInstance()->getContext()->getServer()->getDocumentR
     $arModules[$moduleId] = $arModules[$moduleId] ?? ['VERSION'=>'-'];
 }
 
-if ($request->getRequestMethod()==='POST' && AccessController::isEditSettings() && $request->get('Update'))
+if ($request->getRequestMethod()==='POST' && check_bitrix_sessid()
+    && AccessController::isEditSettings() && $request->get('Update'))
 {
     $LOCKED_str = $request->get('LOCKED');
     $LOCKED_str = preg_replace('/(\t|\n|,)/is', ' ', $LOCKED_str);
@@ -69,11 +70,16 @@ if ($request->getRequestMethod()==='POST' && AccessController::isEditSettings() 
 
     $opts = [];
     foreach($LOCKED as $moduleId=>$val){
+        $moduleId = (string) $moduleId;
+        if(!preg_match('/^[a-z0-9_]+\\.[a-z0-9_.-]+$/i', $moduleId)) continue;
         if($val=='Y'){
             $opts[$moduleId] = ['lock'=>'Y','msg'=>''];
         }
     }
     foreach($MSGS as $moduleId=>$val){
+        $moduleId = (string) $moduleId;
+        if(!preg_match('/^[a-z0-9_]+\\.[a-z0-9_.-]+$/i', $moduleId)) continue;
+        $val = trim(strip_tags((string) $val));
         if(!$val) continue;
         $opts[$moduleId] = $opts[$moduleId] ?? ['lock'=>'N','msg'=>''];
         $opts[$moduleId]['msg'] = $val;
@@ -98,6 +104,7 @@ $tabControl->Begin();
 ?>
     <style>.adm-workarea option:checked {background-color: rgb(206, 206, 206);}</style>
     <form method="POST" action="<?=$saveUrl?>" id="FORMACTION">
+        <?=bitrix_sessid_post()?>
         <?
         $tabControl->BeginNextTab();
         Extension::load("ui.alerts");

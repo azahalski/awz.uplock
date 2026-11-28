@@ -74,10 +74,10 @@ class Handlers {
 
             foreach($opts as $moduleId=>$data){
                 if($data['lock']!='Y') continue;
-                $msg = $data['msg'];
-                if($msg) $msg = "<br><div style=\"display:inline-block;padding:5px;margin:5px 0;background:#ffffff;border:1px solid red;\">".$msg.'</div>';
+                $msg = (string) $data['msg'];
+                if($msg !== '') $msg = "<br><div style=\"display:inline-block;padding:5px;margin:5px 0;background:#ffffff;border:1px solid red;\">".htmlspecialcharsbx($msg).'</div>';
                 if(in_array($moduleId, $arRequestedModules)){
-                    $errorMessage = Loc::getMessage('AWZ_UPLOCK_HANDLERS_MSG',['#MODULE_ID#'=>$moduleId])
+                    $errorMessage = Loc::getMessage('AWZ_UPLOCK_HANDLERS_MSG',['#MODULE_ID#'=>htmlspecialcharsbx($moduleId)])
                         .' '.$msg;
                     echo "ERR".$errorMessage;
                     \Bitrix\Main\Application::getInstance()->end();
